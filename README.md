@@ -15,9 +15,9 @@ https://vuex.vuejs.org/ja/
 いまいちピンときませんが、要は各コンポーネント間で共通変数を **ルール化** して使いまわせるみたいな感じです。
 
 ## ストア（Vuex）の使いどころは？
-Vueにありがちなバケツリレーや、mixinを使いすぎて影響範囲が分からなくなってしまう等を回避できます。
-画面遷移をしても各コンポーネント間でデータを持ち回せるので、カートの情報、モーダル、商品編集ページ（コンポーネント数が多いページ）などで使えます
-業務では1ページ（1URL）1ストアで作成していますが、1ページで管理しているデータがstoreを見れば一目でわかるのでオススメです。
+Vueにありがちなバケツリレーや、mixinを使いすぎて影響範囲が分からなくなってしまう等を回避できます。  
+画面遷移をしても各コンポーネント間でデータを持ち回せるので、カートの情報、モーダル、商品編集ページ（コンポーネント数が多いページ）などで使えます  
+業務では1ページ（1URL）1ストアで作成していますが、1ページで管理しているデータがstoreを見れば一目でわかるのでオススメです。  
 ※ただしコンポーネントで独立している場合は1コンポーネント1ストアにしています
 
 
@@ -34,6 +34,8 @@ cd frontend
 npm run dev
 http://localhost:3000
 ```
+
+--------------------------------------------------
 
 ### バックエンド
 とりあえずnodejsでapiサーバーを立てる
@@ -83,6 +85,7 @@ app.listen(port);
 
 ```
 
+--------------------------------------------------
 ### フロントエンド
 
 frontend/store/product.js
@@ -279,18 +282,20 @@ export default {
 
 ```
 
+![画面スクショ](画面スクショ.png)
+
 ## 解説
 基本的にはstateを定義、mutationでデータセット。必要があればaction、getterを使うみたいな使い方が良いと思います。
 ちなみにすべてのデータをストア管理する必要はないかと思います。必要があれば使う感じで
 
 ### ステート（state）
-公式を読みますがピンときません
+公式を読みますがピンときません  
 https://vuex.vuejs.org/ja/guide/state.html
 
 要は共通変数のようなものですね。このstateは基本的にmutationsからしか変更できません。
 直接変更しようとすると、エラーが出るはずです。
 
-Cart.vue
+frontend/components/Cart.vue
 ```
   data () {
     this.$store.state.cart.products = []
@@ -321,7 +326,7 @@ this.$store.stateを使うかです
 ```
 
 ### ミューテーション（mutations）
-公式を読みますが、これはなんとなく分かります
+公式を読みますが、これはなんとなく分かります  
 https://vuex.vuejs.org/ja/guide/mutations.html
 
 > 実際に Vuex のストアの状態を変更できる唯一の方法は、ミューテーションをコミットすることです。
@@ -345,7 +350,7 @@ this.$store.commitを使うかです
 ```
 
 ### アクション（actions）
-公式を読みますが、これもなんとなく分かります
+公式を読みますが、これもなんとなく分かります  
 https://vuex.vuejs.org/ja/guide/actions.html
 
 > ・アクションは、状態を変更するのではなく、ミューテーションをコミットします。
@@ -370,7 +375,7 @@ this.$store.dispatchを使うかです
 ```
 
 ### ゲッター（getters）
-公式を読みますが、これもなんとなく分かります
+公式を読みますが、これもなんとなく分かります  
 https://vuex.vuejs.org/ja/guide/getters.html
 
 stateの状態を加工して取得したい場合にgetterを使うといいかと思います
@@ -392,16 +397,16 @@ this.$store.gettersを使うかです
 ```
 
 ### モジュール（module）
-素のVuexでは自分でファイルを分けてモジュールで読み込ませてあげる必要がありますが
+素のVuexでは自分でファイルを分けてモジュールで読み込ませてあげる必要がありますが  
 https://vuex.vuejs.org/ja/guide/modules.html
 
-アプリケーションの構造
+アプリケーションの構造  
 https://vuex.vuejs.org/ja/guide/structure.html
 
-参考ソース
+参考ソース  
 https://github.com/vuejs/vuex/blob/dev/examples/shopping-cart/store/index.js
 
-Nuxtのstoreでは
+Nuxtのstoreでは  
 https://ja.nuxtjs.org/docs/2.x/directory-structure/store/
 
 > store ディレクトリの中にあるすべての  .js ファイルは名前空間付きモジュールに変換されます
@@ -410,12 +415,11 @@ https://ja.nuxtjs.org/docs/2.x/directory-structure/store/
 
 ### Q＆A
 
-- Q. ヘルパー使った方がいいの？this.$storeを使った方がいいの？
-ヘルパーを使う方が簡潔に書けるのでオススメです
+Q. ヘルパー使った方がいいの？this.$storeを使った方がいいの？  
+A. ヘルパーを使う方が簡潔に書けるのでオススメです
 
-- たまにでてくる大文字の「types.CHECKOUT_REQUEST」これ何？
-
-ミューテーション・タイプに定数を使用する
+Q. たまにでてくる大文字の「types.CHECKOUT_REQUEST」これ何？  
+A. ミューテーション・タイプに定数を使用する  
 https://vuex.vuejs.org/ja/guide/mutations.html#%E3%83%9F%E3%83%A5%E3%83%BC%E3%83%86%E3%83%BC%E3%82%B7%E3%83%A7%E3%83%B3%E3%83%BB%E3%82%BF%E3%82%A4%E3%83%95%E3%82%9A%E3%81%AB%E5%AE%9A%E6%95%B0%E3%82%92%E4%BD%BF%E7%94%A8%E3%81%99%E3%82%8B
 
 ミューテーションの関数を定数で管理し、コードに対してリントツールのようなツールを利用できるらしいですが、いまいち自分は使いこなせていません
