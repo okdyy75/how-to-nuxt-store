@@ -23,6 +23,7 @@
           GitHub
         </a>
       </div>
+      <NuxtLink to="/product">商品一覧ページ</NuxtLink>
     </div>
   </div>
 </template>
@@ -31,7 +32,7 @@
 export default {}
 </script>
 
-<style>
+<style scoped>
 .container {
   margin: 0 auto;
   min-height: 100vh;
